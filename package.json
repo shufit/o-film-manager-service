@@ -33,6 +33,7 @@
     "weui": "^1.1.0"
   },
   "dependencies": {
+    "antd-mobile": "^2.1.11",
     "axios": "^0.18.0",
     "react-router-dom": "^4.3.1"
   }

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 //import styles
 import 'weui';
 import 'react-weui/build/dist/react-weui.css';
+import 'antd-mobile/dist/antd-mobile.css';
 
 import {
-    Tab,
     TabBarItem,
     Article,
     Button ,
@@ -32,8 +32,14 @@ import {
     FooterText,
     FooterLinks,
     FooterLink,
+    Tab,
+    TabBody,
+    NavBar,
+    NavBarItem,
 
 } from 'react-weui';
+
+import ServerHome from './Pages/Server/ServerHome';
 
 export default class App extends Component {
 
@@ -50,16 +56,7 @@ export default class App extends Component {
     }
     render() {
         return (
-            <Page className={'footer'} title={'Footer'} subTitle={'脚页'} spacing>
-                <Footer>
-                    <FooterLinks>
-                        <FooterLink href="javascript:void(0);">Link</FooterLink>
-                    </FooterLinks>
-                    <FooterText>Copyright &copy; 2002-2018 o-film.iWork</FooterText>
-                </Footer>
-
-
-            </Page>
+            <ServerHome/>
         );
     }
 }
