@@ -13,6 +13,26 @@ import {
     Page,
     ButtonArea,
     ActionSheet,
+    Preview,
+    PreviewHeader,
+    PreviewFooter,
+    PreviewBody,
+    PreviewItem,
+    PreviewButton,
+    Cells,
+    CellsTitle,
+    Cell,
+    CellHeader,
+    CellBody,
+    CellFooter,
+    Dialog,
+    Flex,
+    FlexItem,
+    Footer,
+    FooterText,
+    FooterLinks,
+    FooterLink,
+
 } from 'react-weui';
 
 export default class App extends Component {
@@ -20,55 +40,36 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ios_show:false,
-            android_show:false,
-            menus:[
-                {
-                    label:'Option1',
-                    onClick:()=>{
-
-                    }
-                },
-                {
-                    label:'Option2',
-                    onClick:()=>{
-
-                    }
-                }
-            ],
-            actions:[
-                {
-                    label:'Cancel',
-                    onClick:this.hide.bind(this)
-                }
-            ]
         };
 
     }
 
-    hide() {
+    hideDialog() {
         this.setState({
-            auto_show:false,
-            ios_show:false,
-            android_show:false,
         });
     }
     render() {
         return (
-            <Page className={'actionsheet'} title={'ActionSheet'} subTitle={'弹出式菜单'} spacing>
-                <Button type={'default'} onClick={e=>this.setState({ios_show:true})}>
-                    IOS ActionSheet
-                </Button>
-                <ActionSheet
-                    menus={this.state.menus}
-                    actions={this.state.actions}
-                    show={this.state.ios_show}
-                    type={'ios'}
-                    onRequestClose={e=>this.setState({ios_show:false})}
-                />
+            <Page className={'footer'} title={'Footer'} subTitle={'脚页'} spacing>
+                <Footer>
+                    <FooterLinks>
+                        <FooterLink href="javascript:void(0);">Link</FooterLink>
+                    </FooterLinks>
+                    <FooterText>Copyright &copy; 2002-2018 o-film.iWork</FooterText>
+                </Footer>
+
+
             </Page>
         );
     }
+}
+
+if (module.hot) {
+    module.hot.accept(()=>{
+        ReactDOM.render((
+            <App/>
+        ), document.getElementById('container'));
+    })
 }
 
 ReactDOM.render((

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dopack": "webpack",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot",
+    "dopack": "webpack -p",
+    "dev": "webpack-dev-server",
     "build": "webpack --config webpack.config.js --output-path ./build"
   },
   "keywords": [],
@@ -33,6 +33,7 @@
     "weui": "^1.1.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "react-router-dom": "^4.3.1"
   }
 }
