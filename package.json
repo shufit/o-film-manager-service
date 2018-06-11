@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dopack": "webpack -p",
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --hot --inline --content-base ./build",
     "build": "webpack --config webpack.config.js --output-path ./build"
   },
   "keywords": [],

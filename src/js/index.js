@@ -39,7 +39,23 @@ import {
 
 } from 'react-weui';
 
+import {
+    Switch,
+    HashRouter as Router,
+    Route,
+    Link,
+    BrowserRouter,
+} from 'react-router-dom';
+
 import ServerHome from './Pages/Server/ServerHome';
+
+import BasicRoute from './Router/Router';
+
+const routes = [
+    { path: '/', component: ServerHome, exact: true },
+];
+
+
 
 export default class App extends Component {
 
@@ -56,18 +72,18 @@ export default class App extends Component {
     }
     render() {
         return (
-            <ServerHome/>
+            <BasicRoute/>
         );
     }
 }
 
-if (module.hot) {
-    module.hot.accept(()=>{
-        ReactDOM.render((
-            <App/>
-        ), document.getElementById('container'));
-    })
-}
+// if (module.hot) {
+//     module.hot.accept(()=>{
+//         ReactDOM.render((
+//             <App/>
+//         ), document.getElementById('container'));
+//     })
+// }
 
 ReactDOM.render((
     <App/>

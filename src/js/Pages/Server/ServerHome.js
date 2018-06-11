@@ -40,16 +40,17 @@ import {
 
 import { Tabs, WhiteSpace, Card } from 'antd-mobile';
 import BasePage from '../BasePage';
+import ClientIDCard from '../../Components/ClientIDCard';
 
 class ServerHome extends BasePage {
 
     constructor(props) {
-        super(props)
+        super(props);
 
 
         this.state = {
             tab:0
-        }
+        };
     }
 
     render() {
@@ -91,24 +92,25 @@ class ServerHome extends BasePage {
 
         for (let i = 0; i < 4; i ++) {
             cards.push(
-                <div>
-                    <WhiteSpace size="lg" />
-                    <Preview>
-                        <PreviewHeader>
-                            <PreviewItem label="姓名" value="张某某" />
-                        </PreviewHeader>
-                        <PreviewBody>
-                            <PreviewItem label="职务" value="总监" />
-                            <PreviewItem label="诉求类别" value="xxx类" />
-                            <PreviewItem label="诉求描述" value="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
-                            <PreviewItem label="跟踪人" value="某某" />
-                        </PreviewBody>
-                        <PreviewFooter>
-                            <PreviewButton primary>详情</PreviewButton>
-                        </PreviewFooter>
-                    </Preview>
-                </div>
+                <ClientIDCard
+                    appealID={'2324'}
+                    name={'张某某'}
+                    title={'总监'}
+                    appealClass={'xxx类'}
+                    appealDesc={'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'}
+                    follower={'某某'}
+                    onClick={()=>{
+                        this.props.history.push({
+                            pathname:'/appealDetail',
+                            state: {
+                                id:3,
+                            }
+                        });
+                    }}
+
+                />
             );
+            cards.push(<WhiteSpace size={'lg'}/>);
         }
         return cards;
     }
@@ -119,24 +121,20 @@ class ServerHome extends BasePage {
 
         for (let i = 0; i < 3; i ++) {
             cards.push(
-                <div>
-                    <WhiteSpace size="lg" />
-                    <Preview>
-                        <PreviewHeader>
-                            <PreviewItem label="姓名" value="张某某" />
-                        </PreviewHeader>
-                        <PreviewBody>
-                            <PreviewItem label="职务" value="总监" />
-                            <PreviewItem label="诉求类别" value="xxx类" />
-                            <PreviewItem label="诉求描述" value="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
-                            <PreviewItem label="跟踪人" value="某某" />
-                        </PreviewBody>
-                        <PreviewFooter>
-                            <PreviewButton primary>详情</PreviewButton>
-                        </PreviewFooter>
-                    </Preview>
-                </div>
+                <ClientIDCard
+                    appealID={'2324'}
+                    name={'张某某'}
+                    title={'总监'}
+                    appealClass={'xxx类'}
+                    appealDesc={'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'}
+                    follower={'某某'}
+                    onClick={()=>{
+
+                    }}
+
+                />
             );
+            cards.push(<WhiteSpace size={'lg'}/>);
         }
         return cards;
     }
@@ -146,24 +144,20 @@ class ServerHome extends BasePage {
 
         for (let i = 0; i < 2; i ++) {
             cards.push(
-                <div>
-                    <WhiteSpace size="lg" />
-                    <Preview>
-                        <PreviewHeader>
-                            <PreviewItem label="姓名" value="张某某" />
-                        </PreviewHeader>
-                        <PreviewBody>
-                            <PreviewItem label="职务" value="总监" />
-                            <PreviewItem label="诉求类别" value="xxx类" />
-                            <PreviewItem label="诉求描述" value="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
-                            <PreviewItem label="跟踪人" value="某某" />
-                        </PreviewBody>
-                        <PreviewFooter>
-                            <PreviewButton primary>详情</PreviewButton>
-                        </PreviewFooter>
-                    </Preview>
-                </div>
+                <ClientIDCard
+                    appealID={'2324'}
+                    name={'张某某'}
+                    title={'总监'}
+                    appealClass={'xxx类'}
+                    appealDesc={'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'}
+                    follower={'某某'}
+                    onClick={()=>{
+
+                    }}
+
+                />
             );
+            cards.push(<WhiteSpace size={'lg'}/>);
         }
         return cards;
     }
@@ -173,24 +167,20 @@ class ServerHome extends BasePage {
 
         for (let i = 0; i < 1; i ++) {
             cards.push(
-                <div>
-                    <WhiteSpace size="lg" />
-                    <Preview>
-                        <PreviewHeader>
-                            <PreviewItem label="姓名" value="张某某" />
-                        </PreviewHeader>
-                        <PreviewBody>
-                            <PreviewItem label="职务" value="总监" />
-                            <PreviewItem label="诉求类别" value="xxx类" />
-                            <PreviewItem label="诉求描述" value="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
-                            <PreviewItem label="跟踪人" value="某某" />
-                        </PreviewBody>
-                        <PreviewFooter>
-                            <PreviewButton primary>详情</PreviewButton>
-                        </PreviewFooter>
-                    </Preview>
-                </div>
+                <ClientIDCard
+                    appealID={'2324'}
+                    name={'张某某'}
+                    title={'总监'}
+                    appealClass={'xxx类'}
+                    appealDesc={'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'}
+                    follower={'某某'}
+                    onClick={()=>{
+
+                    }}
+
+                />
             );
+            cards.push(<WhiteSpace size={'lg'}/>);
         }
         return cards;
     }

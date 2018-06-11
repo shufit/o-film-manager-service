@@ -26,9 +26,10 @@ module.exports = {
     devServer: {
         publicPath: publicPath,
         contentBase: path.resolve(__dirname, buildPath),
-        // inline:true,
+        inline:true,
         hot: true,
         port:8888,
+        historyApiFallback:true,
     },
     module: {
         rules: [
