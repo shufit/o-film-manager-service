@@ -72,10 +72,40 @@ class AppealDetail extends BasePage {
     }
 
     _render1stTabContent() {
+
         return (
             <div>
-                诉求信息
+                <Card>
+                    <Card.Header
+                        title="某某"
+                        thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
+                        extra={<span>经理</span>}
+                    />
+                    <Card.Body>
+                        <div>
+                            <PreviewItem label="联系电话" value={'1808088888'} />
+                            <PreviewItem label="诉求类别" value={'生活类'} />
+                            <PreviewItem label="诉求概述" value={'XXXXXXXXXX'} />
+                            <h2>诉求详情</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute</p>
+                        </div>
+                    </Card.Body>
+                    <Card.Footer content="" extra={
+                        <div>
+                        </div>
+                    } />
+                </Card>
+
+                <Button disabled={true} onClick={()=>{
+                    
+                }}>
+                    我来跟踪
+                </Button>
             </div>
+
         );
     }
 
