@@ -35,16 +35,36 @@ import {
     NavBar,
     NavBarItem,
     TabBodyItem,
+    Gallery,
+    Form,
+    FormCell,
+    TextArea,
 
 } from 'react-weui';
 
-import { Tabs, WhiteSpace, Card } from 'antd-mobile';
+import { Tabs, WhiteSpace, Card , ImagePicker} from 'antd-mobile';
+import {Timeline, TimelineEvent} from 'react-event-timeline';
 import BasePage from '../BasePage';
 
 class AppealDetail extends BasePage {
 
     constructor(props) {
         super(props);
+        this.state = {
+            gallery: false,
+            demoFiles: [
+                {
+                    url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
+                    id: '2121',
+                }, {
+                    url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
+                    id: '2122',
+                }],
+            confirmButtonEnable:false,
+        }
+
+
+
     }
 
     render() {
@@ -73,6 +93,7 @@ class AppealDetail extends BasePage {
 
     _render1stTabContent() {
 
+
         return (
             <div>
                 <Card>
@@ -87,10 +108,7 @@ class AppealDetail extends BasePage {
                             <PreviewItem label="诉求类别" value={'生活类'} />
                             <PreviewItem label="诉求概述" value={'XXXXXXXXXX'} />
                             <h2>诉求详情</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute</p>
+                            <p>诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情</p>
                         </div>
                     </Card.Body>
                     <Card.Footer content="" extra={
@@ -98,9 +116,8 @@ class AppealDetail extends BasePage {
                         </div>
                     } />
                 </Card>
-
                 <Button disabled={true} onClick={()=>{
-                    
+
                 }}>
                     我来跟踪
                 </Button>
@@ -109,11 +126,146 @@ class AppealDetail extends BasePage {
         );
     }
 
+    _renderGallery(){
+        if(!this.state.gallery) return false;
+
+        let srcs = this.state.demoFiles.map(file=>file.url)
+
+        return (
+            <Gallery
+                src={srcs}
+                show
+                defaultIndex={this.state.gallery.id}
+                onClick={ e=> {
+                    //avoid click background item
+                    e.preventDefault()
+                    e.stopPropagation();
+                    this.setState({gallery: false})
+                }}
+            >
+
+                <GalleryDelete onClick={ (e, id)=> {
+                    this.setState({
+                        demoFiles: this.state.demoFiles.filter((e,i)=>i != id),
+                        gallery: this.state.demoFiles.length <= 1 ? true : false
+                    })
+                }} />
+
+            </Gallery>
+        )
+    }
+
+    _renderGirdCard() {
+        const gridStyle = {
+            width: '25%',
+            textAlign: 'center',
+        };
+
+        return (
+            <Card title="图片">
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                <Card.Grid style={gridStyle}>Content</Card.Grid>
+            </Card>
+        );
+    }
+
     _render2ndTabContent() {
         return (
             <div>
-                进度信息
+                <CellsTitle>处理结果</CellsTitle>
+                <Form>
+                    <FormCell>
+                        <CellBody>
+                            <Timeline>
+                                <TimelineEvent
+                                    title="shufit"
+                                    titleStyle={{fontWeight: "bold", fontSize:20,}}
+                                    createdAt="2016-09-12 10:06 PM"
+                                    icon={<img src={'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} />}
+                                    iconColor="transparent"
+                                    onClick={()=>{
+
+                                    }}
+                                    contentStyle={{backgroundColor: "#00BCD4", color: "#fff", fontSize:15}}
+                                >
+                                    处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见
+                                </TimelineEvent>
+                                <TimelineEvent
+                                    title="shufit"
+                                    titleStyle={{fontWeight: "bold", fontSize:20,}}
+                                    createdAt="2016-09-12 10:06 PM"
+                                    icon={<img src={'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} />}
+                                    iconColor="transparent"
+                                    onClick={()=>{
+
+                                    }}
+                                    contentStyle={{backgroundColor: "#00BCD4", color: "#fff", fontSize:15}}
+                                >
+                                    处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见
+                                </TimelineEvent>
+                                <TimelineEvent
+                                    title="shufit"
+                                    titleStyle={{fontWeight: "bold", fontSize:20,}}
+                                    createdAt="2016-09-12 10:06 PM"
+                                    icon={<img src={'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} />}
+                                    iconColor="transparent"
+                                    onClick={()=>{
+
+                                    }}
+                                    contentStyle={{backgroundColor: "#00BCD4", color: "#fff", fontSize:15}}
+                                >
+                                    处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见
+                                </TimelineEvent>
+                            </Timeline>
+                        </CellBody>
+                    </FormCell>
+                </Form>
+
+                <CellsTitle>处理意见</CellsTitle>
+                <Form>
+                    <FormCell>
+                        <CellBody>
+                            <TextArea
+                                placeholder="请输入处理意见（100字内）" rows="3" maxlength="200"
+                                onChange={e=>{
+                                    if(e.target.value.length > 0) {
+                                        this.setState({
+                                            confirmButtonEnable:true,
+                                        });
+                                    } else {
+                                        this.setState({
+                                            confirmButtonEnable:false,
+                                        });
+                                    }
+                                }}
+                            />
+                        </CellBody>
+                    </FormCell>
+                </Form>
+
+                <ButtonArea direction="horizontal">
+                    <Button type="warn" disabled={!this.state.confirmButtonEnable} onClick={e=>{
+
+                    }}>
+                        完结诉求
+                    </Button>
+                    <Button
+                        disabled={!this.state.confirmButtonEnable}
+                        onClick={e=>{
+
+                        }}
+                    >
+                        更新进度
+                    </Button>
+                </ButtonArea>
             </div>
+
+
         );
     }
 
