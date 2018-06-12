@@ -43,8 +43,8 @@ import {
 } from 'react-weui';
 
 import { Tabs, WhiteSpace, Card , ImagePicker} from 'antd-mobile';
-import {Timeline, TimelineEvent} from 'react-event-timeline';
 import BasePage from '../BasePage';
+import TimeLineEvents from '../../Components/TimeLineEvents';
 
 class AppealDetail extends BasePage {
 
@@ -175,57 +175,45 @@ class AppealDetail extends BasePage {
     }
 
     _render2ndTabContent() {
+
+        let events = [
+            {
+                title:'Shufit',
+                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
+                createdAt:'2018-05-12 10:06 PM',
+                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
+            },
+            {
+                title:'Shufit',
+                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
+                createdAt:'2018-05-12 10:06 PM',
+                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
+            },
+            {
+                title:'Shufit',
+                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
+                createdAt:'2018-05-12 10:06 PM',
+                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
+            },
+            {
+                title:'Shufit',
+                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
+                createdAt:'2018-05-12 10:06 PM',
+                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
+            },
+            {
+                title:'Shufit',
+                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
+                createdAt:'2018-05-12 10:06 PM',
+                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
+            }
+        ];
         return (
             <div>
-                <CellsTitle>处理结果</CellsTitle>
-                <Form>
-                    <FormCell>
-                        <CellBody>
-                            <Timeline>
-                                <TimelineEvent
-                                    title="shufit"
-                                    titleStyle={{fontWeight: "bold", fontSize:20,}}
-                                    createdAt="2016-09-12 10:06 PM"
-                                    icon={<img src={'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} />}
-                                    iconColor="transparent"
-                                    onClick={()=>{
-
-                                    }}
-                                    contentStyle={{backgroundColor: "#00BCD4", color: "#fff", fontSize:15}}
-                                >
-                                    处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见
-                                </TimelineEvent>
-                                <TimelineEvent
-                                    title="shufit"
-                                    titleStyle={{fontWeight: "bold", fontSize:20,}}
-                                    createdAt="2016-09-12 10:06 PM"
-                                    icon={<img src={'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} />}
-                                    iconColor="transparent"
-                                    onClick={()=>{
-
-                                    }}
-                                    contentStyle={{backgroundColor: "#00BCD4", color: "#fff", fontSize:15}}
-                                >
-                                    处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见
-                                </TimelineEvent>
-                                <TimelineEvent
-                                    title="shufit"
-                                    titleStyle={{fontWeight: "bold", fontSize:20,}}
-                                    createdAt="2016-09-12 10:06 PM"
-                                    icon={<img src={'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} />}
-                                    iconColor="transparent"
-                                    onClick={()=>{
-
-                                    }}
-                                    contentStyle={{backgroundColor: "#00BCD4", color: "#fff", fontSize:15}}
-                                >
-                                    处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见
-                                </TimelineEvent>
-                            </Timeline>
-                        </CellBody>
-                    </FormCell>
-                </Form>
-
+                <TimeLineEvents
+                    headerTitle={'处理进度'}
+                    events={events}
+                />
                 <CellsTitle>处理意见</CellsTitle>
                 <Form>
                     <FormCell>
