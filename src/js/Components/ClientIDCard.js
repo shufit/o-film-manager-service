@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -64,7 +65,7 @@ class ClientIDCard extends BaseComponent {
 
                 <Preview>
                     <PreviewHeader>
-                        <PreviewItem label="姓名" value={this.state.name} />
+                        <PreviewItem label="姓名" value={this.state.name}/>
                     </PreviewHeader>
                     <PreviewBody>
                         <PreviewItem label="职务" value={this.state.title} />

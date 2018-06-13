@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -36,7 +37,10 @@ import {
     NavBarItem,
     TabBodyItem,
 
-} from 'react-weui';
+} from 'react-weui'
+
+import axios from 'axios';
+import qs from 'qs';
 
 import { Tabs, WhiteSpace, Card } from 'antd-mobile';
 
@@ -46,6 +50,10 @@ class BaseComponent extends Component {
         super(props);
     }
 
+    componentDidMount() {
+
+    }
+
     render() {
         return(
             <div>
@@ -53,5 +61,6 @@ class BaseComponent extends Component {
         );
     }
 }
+
 
 export default BaseComponent;
