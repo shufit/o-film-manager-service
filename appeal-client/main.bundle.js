@@ -9725,10 +9725,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* jshint esversion: 6 */
+
 
 //import styles
 
+
+function GetUrlParam(paraName) {
+    var url = document.location.toString();
+    var arrObj = url.split("?");
+
+    if (arrObj.length > 1) {
+        var arrPara = arrObj[1].split("&");
+        var arr;
+
+        for (var i = 0; i < arrPara.length; i++) {
+            arr = arrPara[i].split("=");
+
+            if (arr != null && arr[0] == paraName) {
+                return arr[1];
+            }
+        }
+        return "";
+    } else {
+        return "";
+    }
+}
 
 var ServerHome = function (_BasePage) {
     _inherits(ServerHome, _BasePage);
@@ -9745,6 +9767,12 @@ var ServerHome = function (_BasePage) {
     }
 
     _createClass(ServerHome, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var code = GetUrlParam('code');
+            console.log('Wecode:' + code);
+        }
+    }, {
         key: 'render',
         value: function render() {
 
@@ -13680,11 +13708,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//import styles
-
-
-// import '../jweixin-1.2.0.js';
-
 var BasePage = function (_Component) {
     _inherits(BasePage, _Component);
 
@@ -13730,7 +13753,6 @@ var BasePage = function (_Component) {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).then(function (response) {
-                alert(response);
                 console.log(response);
             }).catch(function (err) {
                 console.log(err);
@@ -13739,7 +13761,7 @@ var BasePage = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_reactWeui.Page, null);
+            return _react2.default.createElement('div', null);
         }
     }]);
 
@@ -14329,7 +14351,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* jshint esversion: 6 */
+
 
 //import styles
 
@@ -14345,46 +14368,7 @@ var BaseComponent = function (_Component) {
 
     _createClass(BaseComponent, [{
         key: 'componentDidMount',
-        value: function componentDidMount() {
-            this._configureWeChat();
-            this._requestAccessToken();
-        }
-    }, {
-        key: '_configureWeChat',
-        value: function _configureWeChat() {
-            // wx.config({
-            //     beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
-            //     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            //     appId: '', // 必填，企业微信的corpID
-            //     timestamp: '', // 必填，生成签名的时间戳
-            //     nonceStr: '', // 必填，生成签名的随机串
-            //     signature: '',// 必填，签名，见附录1
-            //     jsApiList: [
-            //         'onMenuShareAppMessage','onMenuShareWechat','chooseImage','previewImage','uploadImage','downloadImage',
-            //         'previewFile','getNetworkType','onHistoryBack','selectEnterpriseContact','openEnterpriseChat'
-            //     ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-            // });
-        }
-    }, {
-        key: '_requestAccessToken',
-        value: function _requestAccessToken() {
-            var corpid = 'ww7b427830e9a91ac9';
-            var AppSecret = '5vxrgmVz0SeP4z891tzlvKJxPyO6UXLPX1aQnK00Fd8';
-            _axios2.default.post('https://qyapi.weixin.qq.com/cgi-bin/gettoken', _qs2.default.stringify({
-                params: {
-                    corpid: corpid,
-                    corpsecret: AppSecret
-                },
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })).then(function (response) {
-                alert(response);
-                console.log(response);
-            }).catch(function (err) {
-                console.log(err);
-            });
-        }
+        value: function componentDidMount() {}
     }, {
         key: 'render',
         value: function render() {
@@ -14432,9 +14416,9 @@ var _ServerHome = __webpack_require__(142);
 
 var _ServerHome2 = _interopRequireDefault(_ServerHome);
 
-var _Router = __webpack_require__(567);
+var _ClientRouter = __webpack_require__(567);
 
-var _Router2 = _interopRequireDefault(_Router);
+var _ClientRouter2 = _interopRequireDefault(_ClientRouter);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14470,7 +14454,7 @@ var App = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_Router2.default, null);
+            return _react2.default.createElement(_ClientRouter2.default, null);
         }
     }]);
 
@@ -68020,7 +68004,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* jshint esversion: 6 */
+
 
 //import styles
 
@@ -68186,7 +68171,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* jshint esversion: 6 */
+
 
 //import styles
 
@@ -68511,7 +68497,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* jshint esversion: 6 */
+
 
 //import styles
 

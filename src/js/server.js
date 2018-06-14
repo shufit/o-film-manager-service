@@ -49,7 +49,7 @@ import {
 
 import ServerHome from './Pages/Server/ServerHome';
 
-import BasicRoute from './Router/Router';
+import BasicRoute from './Router/ServerRouter';
 
 const routes = [
     { path: '/', component: ServerHome, exact: true },

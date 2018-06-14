@@ -1,0 +1,106 @@
+{
+  "components": {
+    "BaseComponent": {},
+    "ClientIDCard": {
+      "attributes": [
+        "appealID",
+        "name",
+        "title",
+        "appealClass",
+        "appealDesc",
+        "follower",
+        "onClick"
+      ],
+      "props": {
+        "appealID": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": ""
+        },
+        "name": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": ""
+        },
+        "title": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": ""
+        },
+        "appealClass": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": ""
+        },
+        "appealDesc": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": ""
+        },
+        "follower": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": ""
+        },
+        "onClick": {
+          "type": {
+            "name": "custom",
+            "raw": "PropTypes.function"
+          },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    "TimeLineEvents": {
+      "attributes": [
+        "headerTitle",
+        "events"
+      ],
+      "props": {
+        "headerTitle": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": "",
+          "defaultValue": {
+            "value": "'处理进度'",
+            "computed": false
+          }
+        },
+        "events": {
+          "type": {
+            "name": "array"
+          },
+          "required": false,
+          "description": "",
+          "defaultValue": {
+            "value": "[{\n    title:'Shufit',\n    avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',\n    createdAt:'2018-05-12 10:06 PM',\n    contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',\n}]",
+            "computed": false
+          }
+        }
+      }
+    },
+    "BasePage": {},
+    "ClientHome": {},
+    "AppealDetail": {},
+    "ServerHome": {},
+    "ClientRouter": {},
+    "ServerRouter": {},
+    "client": {},
+    "server": {}
+  }
+}

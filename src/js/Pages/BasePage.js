@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import 'weui';
@@ -31,11 +32,12 @@ import {
     FooterLink,
 
 } from 'react-weui';
-
 import axios from 'axios';
 import qs from 'qs';
 
+
 class BasePage extends Component {
+
 
     constructor(props) {
         super(props);
@@ -46,6 +48,7 @@ class BasePage extends Component {
       this._configureWeChat();
       this._requestAccessToken();
     }
+
 
     _configureWeChat() {
         // wx.config({
@@ -66,7 +69,8 @@ class BasePage extends Component {
     _requestAccessToken() {
         const corpid = 'ww7b427830e9a91ac9';
         const AppSecret = '5vxrgmVz0SeP4z891tzlvKJxPyO6UXLPX1aQnK00Fd8';
-        axios.post('https://qyapi.weixin.qq.com/cgi-bin/gettoken',{
+        axios.post('https://qyapi.weixin.qq.com/cgi-bin/gettoken',
+        {
             params:{
                 corpid:corpid,
                 corpsecret:AppSecret,
@@ -83,6 +87,7 @@ class BasePage extends Component {
             });
     }
 
+
     render() {
         return (
             <div>
@@ -90,5 +95,6 @@ class BasePage extends Component {
         );
     }
   }
+
 
 export default BasePage;
