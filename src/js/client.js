@@ -46,13 +46,7 @@ import {
     BrowserRouter,
 } from 'react-router-dom';
 
-import ServerHome from './Pages/Server/ServerHome';
-
 import BasicRoute from './Router/ClientRouter';
-
-const routes = [
-    { path: '/', component: ServerHome, exact: true },
-];
 
 
 

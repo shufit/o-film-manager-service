@@ -30,10 +30,14 @@ import {
     FooterText,
     FooterLinks,
     FooterLink,
+    Icon,
+    Label,
 
 } from 'react-weui';
 import axios from 'axios';
 import qs from 'qs';
+
+window.isLogin = true;
 
 
 class BasePage extends Component {
@@ -87,10 +91,26 @@ class BasePage extends Component {
             });
     }
 
+    _renderLoginContent() {
+        return(
+            <div></div>
+        );
+    }
+
+    _renderUnloginContent() {
+        return (
+            <div style={{display:'flex', alignItems:'center', justifyContent:'center', paddingTop: 100, flexDirection:'column'}}>
+                <Icon size="large" value="info"/>
+                <div style={{display:'flex', fontSize: 20, color:'gray', marginTop: 30}}>请使用(企业)微信客户端先登录</div>
+            </div>
+        );
+    }
+
 
     render() {
         return (
             <div>
+                {isLogin? this._renderLoginContent() : this._renderUnloginContent()}
             </div>
         );
     }

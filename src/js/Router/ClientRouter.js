@@ -8,12 +8,14 @@ import {
     hashHistory,
 } from 'react-router-dom';
 
-import ServerHome from '../Pages/Server/ServerHome';
-import AppealDetail from '../Pages/Server/AppealDetail';
+import ClientHome from '../Pages/Client/ClientHome';
+import AddAppeal from '../Pages/Client/AddAppeal';
+import AppealDetail from '../Pages/Client/AppealDetail';
 
 const routes = [
-    { path: '/', component: ServerHome, exact: true },
-    { path: '/appealDetail', component: AppealDetail, exact: true },
+    { path: '/', component: ClientHome, exact: true },
+    { path: '/AddAppeal', component: AddAppeal, exact: true },
+    { path: '/AppealDetail', component: AppealDetail, exact: true },
 ];
 
 const BasicRoute = () => {
