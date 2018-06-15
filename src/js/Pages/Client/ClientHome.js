@@ -94,18 +94,6 @@ class ClientHome extends BasePage {
 	componentDidMount() {
 		console.log('loginStatus:' + window.isLogin);
 	}
-    // render() {
-	// 	document.title = '诉求管理';
-    //     return (
-	// 		<div>
-	// 			<CellsTitle>{'我的诉求'}</CellsTitle>
-	// 			<Cells>
-	// 				{this._renderCell('差旅费报销单差旅费报销单差旅费报销单差旅费报销单差旅费报销单','2018-06-15','正在处理')}
-	// 			</Cells>
-	// 			{this._renderAddButton()}
-	// 		</div>
-	// 	);
-    // }
 
 	_renderLoginContent() {
 		document.title = '诉求管理';

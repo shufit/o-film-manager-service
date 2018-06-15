@@ -68,7 +68,8 @@ class AppealDetail extends BasePage {
 
     }
 
-    render() {
+
+    _renderLoginContent() {
         const tabs = [
             { title: '诉求信息' },
             { title: '进度信息' },

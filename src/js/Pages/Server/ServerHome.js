@@ -80,7 +80,7 @@ class ServerHome extends BasePage {
         console.log('Wecode:' + code);
     }
 
-    render() {
+    _renderLoginContent() {
 
         const tabs = [
             { title: '未完结的' },
@@ -111,6 +111,7 @@ class ServerHome extends BasePage {
                 <WhiteSpace />
             </div>
         );
+
     }
 
     _render1stTabContent() {
