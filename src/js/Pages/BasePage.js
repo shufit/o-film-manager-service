@@ -35,7 +35,9 @@ import {
 
 } from 'react-weui';
 import axios from 'axios';
-import qs from 'qs';
+
+var moment = require('moment');
+
 
 window.isLogin = true;
 
@@ -49,8 +51,14 @@ class BasePage extends Component {
 
 
     componentDidMount() {
-      this._configureWeChat();
-      this._requestAccessToken();
+      // this._configureWeChat();
+      // this._requestAccessToken();
+    }
+
+    //获取当前的时间戳
+    getTimeStamp() {
+        console.log('时间戳：' + moment());
+        return moment();
     }
 
 

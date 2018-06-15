@@ -58,14 +58,27 @@ import {
 import {
 	Tabs,
 	WhiteSpace,
-	Card
+	Card,
+	ImagePicker,
 } from 'antd-mobile';
 import BasePage from '../BasePage';
+
+const data = [{
+  url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
+  id: '2121',
+}, {
+  url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
+  id: '2122',
+}];
 
 class AddAppeal extends BasePage {
 
     constructor(props) {
         super(props);
+		this.state = {
+			files: data,
+		};
+
     }
 
 	_renderLoginContent() {
@@ -112,6 +125,7 @@ class AddAppeal extends BasePage {
 							</CellBody>
 						</FormCell>
 				</Form>
+				{this._renderImageUpload()}
 				<ButtonArea>
 					<Button>
 						提交
@@ -119,6 +133,28 @@ class AddAppeal extends BasePage {
 				</ButtonArea>
 			</div>
 		);
+	}
+
+	_renderImageUpload() {
+		return (
+			<div>
+  				<ImagePicker
+					files={this.state.files}
+					onChange={this.onChange.bind(this)}
+					onImageClick={(index, fs) => console.log(index, fs)}
+					selectable={this.state.files.length < 5}
+					accept="image/gif,image/jpeg,image/jpg,image/png"
+  				/>
+			</div>
+
+		);
+	}
+
+	onChange(files, type, index) {
+		console.log(files, type, index);
+		this.setState({
+  			files,
+		});
 	}
 
 

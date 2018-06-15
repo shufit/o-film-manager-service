@@ -60,7 +60,6 @@ import {
 import BasePage from '../BasePage';
 import ClientIDCard from '../../Components/ClientIDCard';
 
-
 function GetUrlParam(paraName) {　　　　
 	var url = document.location.toString();　　　　
 	var arrObj = url.split("?");
@@ -92,6 +91,7 @@ class ClientHome extends BasePage {
 		super(props);
 	}
 	componentDidMount() {
+		this.getTimeStamp();
 		console.log('loginStatus:' + window.isLogin);
 	}
 
