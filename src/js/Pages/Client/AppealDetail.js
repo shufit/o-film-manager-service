@@ -44,6 +44,7 @@ import {
 } from 'react-weui';
 
 import { Tabs, WhiteSpace, Card , ImagePicker} from 'antd-mobile';
+import axios from 'axios';
 import BasePage from '../BasePage';
 import TimeLineEvents from '../../Components/TimeLineEvents';
 
@@ -62,10 +63,15 @@ class AppealDetail extends BasePage {
                     id: '2122',
                 }],
             confirmButtonEnable:false,
+            appealData:undefined,
         }
 
 
 
+    }
+
+    componentDidMount() {
+        this._requestAppealDetail();
     }
 
 
@@ -96,32 +102,37 @@ class AppealDetail extends BasePage {
 
     _render1stTabContent() {
 
+        if (this.state.appealData === undefined) {
+            return (
+                <div/>
+            );
+        } else {
+            return (
+                <div>
+                    <Card>
+                        <Card.Header
+                            title={this.state.appealData.userName}
+                            thumb={this.state.appealData.userAvatar}
+                            extra={<span>{this.state.appealData.userPos}</span>}
+                        />
+                        <Card.Body>
+                            <div>
+                                <PreviewItem label="联系电话" value={this.state.appealData.userPhone} />
+                                <PreviewItem label="诉求类别" value={this.state.appealData.appealType} />
+                                <PreviewItem label="诉求概述" value={this.state.appealData.appealSummary} />
+                                <h2>诉求详情</h2>
+                                <p>{this.state.appealData.appealDetail}</p>
+                            </div>
+                        </Card.Body>
+                        <Card.Footer content="" extra={
+                            <div>
+                            </div>
+                        } />
+                    </Card>
+                </div>
 
-        return (
-            <div>
-                <Card>
-                    <Card.Header
-                        title="某某"
-                        thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
-                        extra={<span>经理</span>}
-                    />
-                    <Card.Body>
-                        <div>
-                            <PreviewItem label="联系电话" value={'1808088888'} />
-                            <PreviewItem label="诉求类别" value={'生活类'} />
-                            <PreviewItem label="诉求概述" value={'XXXXXXXXXX'} />
-                            <h2>诉求详情</h2>
-                            <p>诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情</p>
-                        </div>
-                    </Card.Body>
-                    <Card.Footer content="" extra={
-                        <div>
-                        </div>
-                    } />
-                </Card>
-            </div>
-
-        );
+            );
+        }
     }
 
     _renderGallery(){
@@ -216,6 +227,46 @@ class AppealDetail extends BasePage {
 
 
         );
+
+
+    }
+
+    _requestAppealDetail() {
+        this.showLoading();
+        let _appealId = this.props.location.state.appealId;
+        console.log('_appealId:' + _appealId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/fetchDetail';
+        axios.post(url, {
+            params:{
+                appealId:_appealId,
+            }
+        })
+        .then((response)=>{
+            this.hideLoading();
+            if(response.data.errcode == 0 && response.data.data) {
+                let _appealData = {
+                    userName:response.data.data.user.wxcpName || '',
+                    userPhone:response.data.data.user.wxcpPhone || '',
+                    userAvatar:response.data.data.user.wxcpAvatar || '',
+                    userPos:response.data.data.user.wxcpAvatar || '',
+                    appealType:response.data.data.type.remark || '',
+                    appealSummary:response.data.data.summary || '',
+                    appealDetail:response.data.data.detail || '',
+                    attachments:response.data.data.attachments || [],
+                };
+                this.setState({
+                    appealData:_appealData,
+                });
+
+
+            }
+
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        })
+        ;
+
     }
 
 }

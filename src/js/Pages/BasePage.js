@@ -34,31 +34,50 @@ import {
     Label,
 
 } from 'react-weui';
+import {
+    ActivityIndicator,
+} from 'antd-mobile';
 import axios from 'axios';
 
 var moment = require('moment');
 
 
 window.isLogin = true;
-
+window.userID = 4;
 
 class BasePage extends Component {
 
 
     constructor(props) {
         super(props);
+        this.state = {
+            showLoading:false,
+        }
     }
 
 
     componentDidMount() {
       // this._configureWeChat();
       // this._requestAccessToken();
+      window.userID = 4;
     }
 
     //获取当前的时间戳
     getTimeStamp() {
         console.log('时间戳：' + moment());
         return moment();
+    }
+
+    showLoading() {
+        this.setState({
+            showLoading:true,
+        });
+    }
+
+    hideLoading() {
+        this.setState({
+            showLoading:false,
+        });
     }
 
 
@@ -99,6 +118,21 @@ class BasePage extends Component {
             });
     }
 
+    _renderLoginRootContent() {
+        return (
+            <div>
+                {this._renderLoginContent()}
+                <div className="toast-example">
+                    <ActivityIndicator
+                        toast
+                        text="加载中..."
+                        animating={this.state.showLoading}
+                    />
+                </div>
+            </div>
+        );
+    }
+
     _renderLoginContent() {
         return(
             <div></div>
@@ -118,7 +152,7 @@ class BasePage extends Component {
     render() {
         return (
             <div>
-                {isLogin? this._renderLoginContent() : this._renderUnloginContent()}
+                {window.isLogin ? this._renderLoginRootContent() : this._renderUnloginContent()}
             </div>
         );
     }

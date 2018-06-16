@@ -113,7 +113,7 @@ class AddAppeal extends BasePage {
 								<Label>诉求概述:</Label>
 							</CellHeader>
 							<CellBody>
-								<TextArea placeholder="请输入诉求概述（100字内）" rows="2" maxlength="100"></TextArea>
+								<TextArea placeholder="请输入诉求概述（100字内）" rows="2" maxLength={100}></TextArea>
 							</CellBody>
 						</FormCell>
 						<FormCell>
@@ -121,7 +121,7 @@ class AddAppeal extends BasePage {
 								<Label>诉求详情:</Label>
 							</CellHeader>
 							<CellBody>
-								<TextArea placeholder="请输入诉求详情(200字内)" rows="3" maxlength="200"></TextArea>
+								<TextArea placeholder="请输入诉求详情(200字内)" rows="3" maxLength={200}></TextArea>
 							</CellBody>
 						</FormCell>
 				</Form>

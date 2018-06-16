@@ -83,7 +83,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, '/client.html'),
             filename: 'index.html',
-            chunks:['jssdk','main'],
+            chunks:['main'],
         }),
         new ExtractTextPlugin('styles.css')
         // new webpack.HotModuleReplacementPlugin(), //添加
