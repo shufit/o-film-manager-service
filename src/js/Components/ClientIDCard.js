@@ -72,6 +72,7 @@ class ClientIDCard extends BaseComponent {
                         <PreviewItem label="诉求类别" value={this.state.appealClass} />
                         <PreviewItem label="诉求描述" value={this.state.appealDesc} />
                         <PreviewItem label="跟踪人" value={this.state.follower} />
+                        <p style={{display:'flex', color:'#fff'}}>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
                     </PreviewBody>
                     <PreviewFooter>
                         <PreviewButton primary onClick={()=>{
