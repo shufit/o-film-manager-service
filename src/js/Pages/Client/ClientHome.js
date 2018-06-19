@@ -92,7 +92,7 @@ class ClientHome extends BasePage {
 		super(props);
 		this.state = {
 			appealList:[],
-		}
+		};
 	}
 	componentDidMount() {
 		this.getTimeStamp();

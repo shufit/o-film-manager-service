@@ -36,6 +36,7 @@ import {
 } from 'react-weui';
 import {
     ActivityIndicator,
+    Toast,
 } from 'antd-mobile';
 import axios from 'axios';
 
@@ -52,7 +53,8 @@ class BasePage extends Component {
         super(props);
         this.state = {
             showLoading:false,
-        }
+        };
+        this.userID = 4;
     }
 
 
@@ -78,6 +80,14 @@ class BasePage extends Component {
         this.setState({
             showLoading:false,
         });
+    }
+
+    showSuccessToast(content) {
+        Toast.success(content, 3, null, true);
+    };
+
+    showFailTost(content) {
+        Toast.fail(content, 3, null, true);
     }
 
 
