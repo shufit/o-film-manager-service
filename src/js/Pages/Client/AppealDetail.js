@@ -64,6 +64,7 @@ class AppealDetail extends BasePage {
                 }],
             confirmButtonEnable:false,
             appealData:undefined,
+            appealKeeper:undefined,
         }
 
 
@@ -86,7 +87,11 @@ class AppealDetail extends BasePage {
             <div>
                 <WhiteSpace />
                 <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false} onTabClick={(tabData, index) => {
-
+                        if (index == 0) {
+                            this._requestAppealDetail();
+                        } else if (index == 1) {
+                            this._requestAppealKeeperData();
+                        }
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#F5F5F5', flexDirection:'column' }}>
                         {this._render1stTabContent()}
@@ -104,11 +109,10 @@ class AppealDetail extends BasePage {
 
         if (this.state.appealData === undefined) {
             return (
-                <div/>
+                <div></div>
             );
         } else {
             return (
-                <div>
                     <Card>
                         <Card.Header
                             title={this.state.appealData.userName}
@@ -129,7 +133,6 @@ class AppealDetail extends BasePage {
                             </div>
                         } />
                     </Card>
-                </div>
 
             );
         }
@@ -184,51 +187,20 @@ class AppealDetail extends BasePage {
     }
 
     _render2ndTabContent() {
-
-        let events = [
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            }
-        ];
-        return (
-            <div>
-                <TimeLineEvents
-                    headerTitle={'处理进度'}
-                    events={events}
-                />
-            </div>
+        if (this.state.appealKeeper === undefined) {
+            return (<div>暂无跟进信息</div>);
+        } else {
+            return (
+                <div>
+                    <TimeLineEvents
+                        headerTitle={'处理进度'}
+                        events={this.state.appealKeeper}
+                    />
+                </div>
 
 
-        );
-
-
+            );
+        }
     }
 
     _requestAppealDetail() {
@@ -236,19 +208,18 @@ class AppealDetail extends BasePage {
         let _appealId = this.props.location.state.appealId;
         console.log('_appealId:' + _appealId);
         let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/fetchDetail';
-        axios.post(url, {
-            params:{
-                appealId:_appealId,
-            }
+        axios.post(url,{
+            appealId:_appealId,
         })
         .then((response)=>{
             this.hideLoading();
+            console.log('appealData: ' + response.data.errmsg);
             if(response.data.errcode == 0 && response.data.data) {
                 let _appealData = {
                     userName:response.data.data.user.wxcpName || '',
                     userPhone:response.data.data.user.wxcpPhone || '',
                     userAvatar:response.data.data.user.wxcpAvatar || '',
-                    userPos:response.data.data.user.wxcpAvatar || '',
+                    userPos:response.data.data.user.wxcpPost || '未知',
                     appealType:response.data.data.type.remark || '',
                     appealSummary:response.data.data.summary || '',
                     appealDetail:response.data.data.detail || '',
@@ -264,9 +235,43 @@ class AppealDetail extends BasePage {
         })
         .catch((err)=>{
             this.hideLoading();
-        })
-        ;
+        });
 
+    }
+
+    _requestAppealKeeperData() {
+        this.showLoading();
+        let _appealId = this.props.location.state.appealId;
+        console.log('_appealId:' + _appealId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/listFollowUp';
+        axios.post(url,{
+            appealId:_appealId,
+        })
+        .then((response)=>{
+            this.hideLoading();
+            console.log('appealKeeper: ' + response.data.errmsg);
+            if(response.data.errcode == 0 && response.data.data && response.data.data.length > 0) {
+                let _appealKeeper = response.data.data.map(keeper=>{
+                    return ({
+                        title:keeper.keeper.wxcpName ||'未知',
+                        avatarUrl:keeper.keeper.wxcpAvatar || 'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
+                        createdAt:keeper.createTime || '未知',
+                        contentStr:keeper.comments || '未知',
+                    });
+                })
+                this.setState({
+                    appealKeeper:_appealKeeper,
+                });
+            } else {
+                this.setState({
+                    appealKeeper:undefined,
+                });
+            }
+
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
     }
 
 }
