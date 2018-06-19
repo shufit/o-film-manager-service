@@ -177,7 +177,7 @@ class ServerHome extends BasePage {
 
         if (this.state.tab2Data && this.state.tab2Data.length > 0) {
 
-            let cards = this.state.tab1Data.map(appealData=>{
+            let cards = this.state.tab2Data.map(appealData=>{
                 let {appealID, name, title, appealClass, appealDesc, follower} = appealData;
                 return (
                     <div>
@@ -213,7 +213,7 @@ class ServerHome extends BasePage {
     _render3rdTabContent() {
         if (this.state.tab3Data && this.state.tab3Data.length > 0) {
 
-            let cards = this.state.tab1Data.map(appealData=>{
+            let cards = this.state.tab3Data.map(appealData=>{
                 let {appealID, name, title, appealClass, appealDesc, follower} = appealData;
                 return (
                     <div>
@@ -249,7 +249,7 @@ class ServerHome extends BasePage {
     _render4thTabContent() {
         if (this.state.tab4Data && this.state.tab4Data.length > 0) {
 
-            let cards = this.state.tab1Data.map(appealData=>{
+            let cards = this.state.tab4Data.map(appealData=>{
                 let {appealID, name, title, appealClass, appealDesc, follower} = appealData;
                 return (
                     <div>

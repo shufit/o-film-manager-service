@@ -44,6 +44,7 @@ import {
 } from 'react-weui';
 
 import { Tabs, WhiteSpace, Card , ImagePicker} from 'antd-mobile';
+import axios from 'axios';
 import BasePage from '../BasePage';
 import TimeLineEvents from '../../Components/TimeLineEvents';
 
@@ -62,10 +63,19 @@ class AppealDetail extends BasePage {
                     id: '2122',
                 }],
             confirmButtonEnable:false,
+            followed:false,
+            appealData:undefined,
+            canIFollow:false,
+            events:undefined,
         }
 
 
 
+    }
+
+    componentDidMount() {
+        this.hideLoading();
+        this._requestDetail();
     }
 
 
@@ -79,6 +89,11 @@ class AppealDetail extends BasePage {
             <div>
                 <WhiteSpace />
                 <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false} onTabClick={(tabData, index) => {
+                        if (index == 0) {
+                            this._requestDetail();
+                        } else if (index == 1) {
+                            this._requestFollowerList();
+                        }
 
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#F5F5F5', flexDirection:'column' }}>
@@ -95,66 +110,46 @@ class AppealDetail extends BasePage {
 
     _render1stTabContent() {
 
-
-        return (
-            <div>
-                <Card>
-                    <Card.Header
-                        title="某某"
-                        thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
-                        extra={<span>经理</span>}
-                    />
-                    <Card.Body>
-                        <div>
-                            <PreviewItem label="联系电话" value={'1808088888'} />
-                            <PreviewItem label="诉求类别" value={'生活类'} />
-                            <PreviewItem label="诉求概述" value={'XXXXXXXXXX'} />
-                            <h2>诉求详情</h2>
-                            <p>诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情诉求详情</p>
-                        </div>
-                    </Card.Body>
-                    <Card.Footer content="" extra={
-                        <div>
-                        </div>
-                    } />
-                </Card>
-                <Button disabled={true} onClick={()=>{
-
-                }}>
-                    我来跟踪
-                </Button>
-            </div>
-
-        );
-    }
-
-    _renderGallery(){
-        if(!this.state.gallery) return false;
-
-        let srcs = this.state.demoFiles.map(file=>file.url)
-
-        return (
-            <Gallery
-                src={srcs}
-                show
-                defaultIndex={this.state.gallery.id}
-                onClick={ e=> {
-                    //avoid click background item
-                    e.preventDefault()
-                    e.stopPropagation();
-                    this.setState({gallery: false})
-                }}
-            >
-
-                <GalleryDelete onClick={ (e, id)=> {
-                    this.setState({
-                        demoFiles: this.state.demoFiles.filter((e,i)=>i != id),
-                        gallery: this.state.demoFiles.length <= 1 ? true : false
-                    })
-                }} />
-
-            </Gallery>
-        )
+        if (this.state.appealData) {
+            let {userName,userPhone,userAvatar,userPos,appealType,appealSummary,appealDetail,attachments} = this.state.appealData;
+            return (
+                <div>
+                    <Card full>
+                        <Card.Header
+                            title={userName}
+                            thumb={userAvatar}
+                            extra={<span>{userPos}</span>}
+                            thumbStyle={{
+                                height: 30,
+                                width: 30,
+                            }}
+                        />
+                        <Card.Body>
+                            <div>
+                                <PreviewItem label="联系电话" value={userPhone} />
+                                <PreviewItem label="诉求类别" value={appealType} />
+                                <PreviewItem label="诉求概述" value={appealSummary} />
+                                <h2>诉求详情</h2>
+                                <p>{appealDetail}</p>
+                            </div>
+                        </Card.Body>
+                        <Card.Footer content="" extra={
+                            <div>
+                            </div>
+                        } />
+                    </Card>
+                    <ButtonArea>
+                        <Button disabled={this.state.followed} onClick={()=>{
+                                this._requestWant();
+                        }}>
+                            我来跟踪
+                        </Button>
+                    </ButtonArea>
+                </div>
+            );
+        } else {
+            return (<div></div>);
+        }
     }
 
     _renderGirdCard() {
@@ -177,52 +172,20 @@ class AppealDetail extends BasePage {
     }
 
     _render2ndTabContent() {
-
-        let events = [
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            },
-            {
-                title:'Shufit',
-                avatarUrl:'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg',
-                createdAt:'2018-05-12 10:06 PM',
-                contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
-            }
-        ];
         return (
             <div>
-                <TimeLineEvents
+                {this.state.events && this.state.events.length > 0 ? <TimeLineEvents
                     headerTitle={'处理进度'}
-                    events={events}
-                />
+                    events={this.state.events}
+                /> : null}
                 <CellsTitle>处理意见</CellsTitle>
                 <Form>
                     <FormCell>
                         <CellBody>
                             <TextArea
-                                placeholder="请输入处理意见（100字内）" rows="3" maxlength="200"
+                                placeholder="请输入处理意见（100字内）" rows="3" maxLength={200}
                                 onChange={e=>{
+                                    this.comments = e.target.value;
                                     if(e.target.value.length > 0) {
                                         this.setState({
                                             confirmButtonEnable:true,
@@ -247,7 +210,7 @@ class AppealDetail extends BasePage {
                     <Button
                         disabled={!this.state.confirmButtonEnable}
                         onClick={e=>{
-
+                            this._requestUpdateFollowList();
                         }}
                     >
                         更新进度
@@ -257,6 +220,139 @@ class AppealDetail extends BasePage {
 
 
         );
+    }
+
+
+
+//请求诉求详情
+    _requestDetail() {
+        this.showLoading();
+        let _appealId = this.props.location.state.appealId;
+        console.log('_appealId:' + _appealId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/fetch';
+        axios.post(url,{
+            appealId:_appealId,
+        })
+        .then((response)=>{
+            this.hideLoading();
+            console.log('appealData: ' + response.data.errmsg);
+            if(response.data.errcode == 0 && response.data.data) {
+                let _appealData = {
+                    userName:response.data.data.user.wxcpName || '未知',
+                    userPhone:response.data.data.user.wxcpPhone || '未知',
+                    userAvatar:response.data.data.user.wxcpAvatar || '',
+                    userPos:response.data.data.user.wxcpPost || '未知',
+                    appealType:response.data.data.type.remark || '未知',
+                    appealSummary:response.data.data.summary || '未知',
+                    appealDetail:response.data.data.detail || '未知',
+                    attachments:response.data.data.attachments || [],
+                };
+                let followed = response.data.data.keeper.valid && response.data.data.status !== 'PENDING';
+                let canIFollow = (response.data.data.status !== 'FINISH') && (response.data.data.keeper.id === window.userID)
+                this.setState({
+                    appealData:_appealData,
+                    followed:followed,
+                    canIFollow:canIFollow,
+                });
+
+
+            }
+
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
+    }
+
+//我来跟进请求
+    _requestWant() {
+        this.showLoading();
+        let _appealId = this.props.location.state.appealId;
+        console.log('_appealId:' + _appealId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/want';
+        axios.post(url,{
+            appealId:_appealId,
+        })
+        .then((response)=>{
+            this.hideLoading();
+            console.log('appealData: ' + response.data.errmsg);
+            if(response.data.errcode == 0) {
+                this.showSuccessToast('跟踪成功');
+                this.setState({
+                    followed:true,
+                    canIFollow:true,
+                });
+            } else {
+                this.showFailTost(response.data.errms);
+            }
+
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
+    }
+
+    //请求处理进度列表
+    _requestFollowerList() {
+        this.showLoading();
+        let _appealId = this.props.location.state.appealId;
+        console.log('_appealId:' + _appealId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/listFollowUp';
+        axios.post(url,{
+            appealId:_appealId,
+        })
+        .then((response)=>{
+            this.hideLoading();
+            console.log('appealData: ' + response.data.errmsg);
+            if(response.data.errcode == 0 && response.data.data) {
+                let _events = response.data.data.map(event=>{
+                    return (
+                        {
+                            title:event.keeper.wxcpName,
+                            avatarUrl:event.keeper.wxcpAvatar,
+                            createdAt:event.createTime,
+                            contentStr:event.comments,
+                        }
+                    );
+                });
+                this.setState({
+                    events:_events,
+                });
+            } else {
+                this.showFailTost(response.data.errms);
+            }
+
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
+    }
+
+    //更新进度信息
+    _requestUpdateFollowList() {
+        this.showLoading();
+        let _appealId = this.props.location.state.appealId;
+        console.log('_appealId:' + _appealId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/follow';
+        axios.post(url,{
+            appealId:_appealId,
+            comments:this.comments,
+        })
+        .then((response)=>{
+            this.hideLoading();
+            console.log('appealData: ' + response.data.errmsg);
+            if(response.data.errcode == 0) {
+                this.showSuccessToast('更新成功!');
+                this._requestFollowerList();
+
+            } else {
+                this.showFailTost(response.data.errms);
+            }
+
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
     }
 
 }
