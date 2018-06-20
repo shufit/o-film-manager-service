@@ -177,7 +177,17 @@ class AppealDetail extends BasePage {
                 {this.state.events && this.state.events.length > 0 ? <TimeLineEvents
                     headerTitle={'处理进度'}
                     events={this.state.events}
-                /> : null}
+                /> : <div>暂无处理进度</div>}
+                {this.state.canIFollow ? this._renderHandleInput() : <div>诉求已完结</div>}
+            </div>
+
+
+        );
+    }
+
+    _renderHandleInput() {
+        return (
+            <div>
                 <CellsTitle>处理意见</CellsTitle>
                 <Form>
                     <FormCell>
@@ -203,7 +213,7 @@ class AppealDetail extends BasePage {
 
                 <ButtonArea direction="horizontal">
                     <Button type="warn" disabled={!this.state.confirmButtonEnable} onClick={e=>{
-
+                            this._requestFinishAppeal();
                     }}>
                         完结诉求
                     </Button>
@@ -217,8 +227,6 @@ class AppealDetail extends BasePage {
                     </Button>
                 </ButtonArea>
             </div>
-
-
         );
     }
 
@@ -346,7 +354,37 @@ class AppealDetail extends BasePage {
                 this._requestFollowerList();
 
             } else {
-                this.showFailTost(response.data.errms);
+                this.showFailTost(response.data.errmsg);
+            }
+
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
+    }
+
+    //诉求完结请求
+    _requestFinishAppeal() {
+        this.showLoading();
+        let _appealId = this.props.location.state.appealId;
+        console.log('_appealId:' + _appealId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/finish';
+        axios.post(url,{
+            appealId:_appealId,
+            comments:this.comments,
+        })
+        .then((response)=>{
+            this.hideLoading();
+            console.log('appealData: ' + response.data.errmsg);
+            if(response.data.errcode == 0) {
+                this.showSuccessToast('诉求处理结束!');
+                this.setState({
+                    canIFollow:false,
+                });
+                this._requestFollowerList();
+
+            } else {
+                this.showFailTost(response.data.errmsg);
             }
 
         })

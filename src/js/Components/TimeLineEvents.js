@@ -64,8 +64,9 @@ class TimeLineEvents extends BaseComponent {
                title={event.title || 'undefined'}
                titleStyle={{fontWeight: "bold", fontSize:20,}}
                createdAt={event.createdAt || 'undefined'}
-               icon={<img src={event.avatarUrl || 'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} />}
+               icon={<img src={event.avatarUrl || 'https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg'} width="30px" height="30px"/>}
                iconColor="transparent"
+               iconStyle={{height: 20, width: 20}}
                contentStyle={{backgroundColor: "#00BCD4", color: "#fff", fontSize:15}}
            >
                {event.contentStr}
@@ -105,6 +106,7 @@ TimeLineEvents.defaultProps = {
         contentStr:'处理意见处理意见处理意见处理意见处理意见处理意见处理意见处理意见',
     }],
 };
+
 
 
 export default TimeLineEvents;
