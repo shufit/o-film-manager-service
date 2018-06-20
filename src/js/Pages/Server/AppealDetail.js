@@ -78,6 +78,10 @@ class AppealDetail extends BasePage {
         this._requestDetail();
     }
 
+    render() {
+        return this._renderLoginContent();
+    }
+
 
     _renderLoginContent() {
         const tabs = [

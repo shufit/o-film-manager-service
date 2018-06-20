@@ -206,8 +206,13 @@ class AppealDetail extends BasePage {
     _requestAppealDetail() {
         this.showLoading();
         let _appealId = this.props.location.state.appealId;
+        let _userId = this.props.location.state.userId;
+        if(_userId === undefined) {
+            this.showFailTost('userId不能为空');
+            return;
+        }
         console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/fetchDetail';
+        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/fetchDetail';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -242,8 +247,13 @@ class AppealDetail extends BasePage {
     _requestAppealKeeperData() {
         this.showLoading();
         let _appealId = this.props.location.state.appealId;
+        let _userId = this.props.location.state.userId;
+        if(_userId === undefined) {
+            this.showFailTost('userId不能为空');
+            return;
+        }
         console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/listFollowUp';
+        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/listFollowUp';
         axios.post(url,{
             appealId:_appealId,
         })

@@ -97,8 +97,7 @@ class ClientHome extends BasePage {
 		};
 	}
 	componentDidMount() {
-		this.getTimeStamp();
-		this._requestAppealList();
+		this.requestUserId();
 	}
 
 	_renderLoginContent() {
@@ -110,6 +109,14 @@ class ClientHome extends BasePage {
 					{this._renderCells()}
 				</Cells>
 				{this._renderAddButton()}
+			</div>
+		);
+	}
+
+	render() {
+		return (
+			<div>
+				{this._renderLoginContent()}
 			</div>
 		);
 	}
@@ -137,6 +144,7 @@ class ClientHome extends BasePage {
 					pathname:'/AppealDetail',
 					state: {
 						appealId:appealData.id,
+						userId:window.userId,
 					}
 				});
 				}}>
@@ -158,6 +166,7 @@ class ClientHome extends BasePage {
 					this.props.history.push({
 						pathname:'/AddAppeal',
 						state: {
+							userId: window.userId,
 						}
 					});
 				}}>
@@ -168,9 +177,13 @@ class ClientHome extends BasePage {
 	}
 
 	_requestAppealList() {
+		if(window.userId === undefined) {
+			this.showFailTost('userId不能为空');
+			return;
+		}
 		this.showLoading();
-		console.log("userID:" + window.userID);
-		let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/listBrief'
+		console.log("userID:" + window.userId);
+		let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userId +'/listBrief'
 		axios.post(url, {
 			params:{},
 			headers:{
@@ -206,6 +219,32 @@ class ClientHome extends BasePage {
 		})
 		;
 	}
+
+	requestUserId() {
+        let code = GetUrlParam('code');
+        console.log('code: ' + code);
+        let paramaCode = code.replace('#/','');
+        console.log('paramaCode: ' + paramaCode);
+        this.showLoading();
+        axios.get('https://test.it.o-film.com/ofilm-hk-cli/portal/giveMeUser', {
+            params:{
+                'code':paramaCode,
+            }
+        })
+        .then((response)=> {
+            this.hideLoading();
+            if (response.data.errcode == 0 && response.data.data) {
+
+                    window.userId = response.data.data.id ;
+                    console.log('userId:' + window.userId);
+                    console.log('用户名:'+ (response.data.data.wxCpUser ? response.data.data.wxCpUser.name : '未知' ));
+					this._requestAppealList();
+            }
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
+    }
 
 }
 

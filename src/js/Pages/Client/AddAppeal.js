@@ -79,6 +79,7 @@ class AddAppeal extends BasePage {
 		this.state = {
 			files: [],
 			hasSummary:false,
+			appealType:0,
 		};
 		this.uploadImageFiles = [];
 		this.appealType = 0;
@@ -87,6 +88,10 @@ class AddAppeal extends BasePage {
 
 	componentDidMount() {
 		this.hideLoading();
+	}
+
+	render() {
+		return this._renderLoginContent();
 	}
 
 	_renderLoginContent() {
@@ -117,6 +122,9 @@ class AddAppeal extends BasePage {
 								onChange={e=>{
 									console.log('select value:' + e.target.value);
 									this.appealType = e.target.value;
+									this.setState({
+										appealType:e.target.value,
+									});
 								}}
 								/>
 							</CellBody>
@@ -220,10 +228,15 @@ class AddAppeal extends BasePage {
 
 	_submitAppealRequest() {
 		this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/newAppeal';
+		let _userId = this.props.location.state.userId;
+		if(_userId === undefined) {
+			this.showFailTost('userId不能为空');
+			return;
+		}
+        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/newAppeal';
         axios.post(url,{
-			type:this.appealType,
-            userId:4,
+			type:this.state.appealType,
+            userId:_userId,
 			summary:this.summary || '',
 			detail:this.detail || '',
 			attachments:this.uploadImageFiles,
