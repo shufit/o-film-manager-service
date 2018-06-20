@@ -85,7 +85,7 @@ class ClientIDCard extends BaseComponent {
 }
 
 ClientIDCard.propTypes = {
-    appealID: PropTypes.string,
+    appealID: PropTypes.number,
     name: PropTypes.string,
     title: PropTypes.string,
     appealClass: PropTypes.string,

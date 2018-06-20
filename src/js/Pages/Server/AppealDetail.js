@@ -178,7 +178,7 @@ class AppealDetail extends BasePage {
                     headerTitle={'处理进度'}
                     events={this.state.events}
                 /> : <div>暂无处理进度</div>}
-                {this.state.canIFollow ? this._renderHandleInput() : <div>诉求已完结</div>}
+                {this.state.followed ? (this.state.canIFollow ? this._renderHandleInput() : <div style={{color:'green'}}>诉求已完结</div>) : (<div style={{color:'red'}}>诉求未被跟踪，请先跟踪诉求</div>)}
             </div>
 
 
@@ -256,7 +256,7 @@ class AppealDetail extends BasePage {
                     attachments:response.data.data.attachments || [],
                 };
                 let followed = response.data.data.keeper.valid && response.data.data.status !== 'PENDING';
-                let canIFollow = (response.data.data.status !== 'FINISH') && (response.data.data.keeper.id === window.userID)
+                let canIFollow = (response.data.data.status === 'DEALING') && (response.data.data.keeper.id === window.userID)
                 this.setState({
                     appealData:_appealData,
                     followed:followed,
