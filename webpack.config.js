@@ -46,7 +46,8 @@ module.exports = {
                 use: {
                   loader: 'babel-loader',
                   options: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react'],
+                     'plugins':[['import',{'libraryName':'antd-mobile'}]]
                   }
                 }
             },
@@ -103,7 +104,8 @@ module.exports = {
 //                 use: {
 //                   loader: 'babel-loader',
 //                   options: {
-//                     presets: ['es2015', 'react']
+//                     presets: ['es2015', 'react'],
+//                     'plugins':[['import',{'libraryName':'antd-mobile'}]]
 //                   }
 //                 }
 //             },
