@@ -44,8 +44,6 @@ var moment = require('moment');
 
 
 window.isLogin = true;
-window.userID = 4;
-
 class BasePage extends Component {
 
 
@@ -53,14 +51,14 @@ class BasePage extends Component {
         super(props);
         this.state = {
             showLoading:false,
+            UserId:undefined,
+            isLogin:false,
         };
         this.userID = 4;
     }
 
 
     componentDidMount() {
-      // this._configureWeChat();
-      // this._requestAccessToken();
       window.userID = 4;
     }
 
@@ -106,26 +104,30 @@ class BasePage extends Component {
         // });
     }
 
+    // requestUserId() {
+    //     this.showLoading();
+    //     axios.get('https://test.it.o-film.com/ofilm-hk-srv/portal/giveMeUser', {
+    //         params:{
+    //             'code':'658G7t6XQyrryOEDDHpMyW2ykWxlGkYo5ne4viOaBTA',
+    //             'state':'state',
+    //         }
+    //     })
+    //     .then(function(response) {
+    //         this.hideLoading();
+    //         this.setState({
+    //             UserId:response.data.data.id || undefined,
+    //             isLogin:true,
+    //         }, ()=>{
+    //             this.afterGettingUserIdRefresh();
+    //         })
+    //     })
+    //     .catch(function(err){
+    //         this.hideLoading();
+    //     });
+    // }
 
-    _requestAccessToken() {
-        const corpid = 'ww7b427830e9a91ac9';
-        const AppSecret = '5vxrgmVz0SeP4z891tzlvKJxPyO6UXLPX1aQnK00Fd8';
-        axios.post('https://qyapi.weixin.qq.com/cgi-bin/gettoken',
-        {
-            params:{
-                corpid:corpid,
-                corpsecret:AppSecret,
-            },
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
+    afterGettingUserIdRefresh() {
+        //获得UserId后请求刷新首页页面，在自类中重写实现
     }
 
     _renderLoginRootContent() {
@@ -162,7 +164,7 @@ class BasePage extends Component {
     render() {
         return (
             <div>
-                {window.isLogin ? this._renderLoginRootContent() : this._renderUnloginContent()}
+                {this.state.isLogin ? this._renderLoginRootContent() : this._renderUnloginContent()}
             </div>
         );
     }

@@ -236,8 +236,9 @@ class AppealDetail extends BasePage {
     _requestDetail() {
         this.showLoading();
         let _appealId = this.props.location.state.appealId;
-        console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/fetch';
+        let _userId = this.props.location.state.userId;
+        console.log('_appealId:' + _appealId + ' _userId:' + _userId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/fetch';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -256,7 +257,7 @@ class AppealDetail extends BasePage {
                     attachments:response.data.data.attachments || [],
                 };
                 let followed = response.data.data.keeper.valid && response.data.data.status !== 'PENDING';
-                let canIFollow = (response.data.data.status === 'DEALING') && (response.data.data.keeper.id === window.userID)
+                let canIFollow = (response.data.data.status === 'DEALING') && (response.data.data.keeper.id === _userId)
                 this.setState({
                     appealData:_appealData,
                     followed:followed,
@@ -276,8 +277,9 @@ class AppealDetail extends BasePage {
     _requestWant() {
         this.showLoading();
         let _appealId = this.props.location.state.appealId;
-        console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/want';
+        let _userId = this.props.location.state.userId;
+        console.log('_appealId:' + _appealId + ' _userId:' + _userId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/want';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -304,8 +306,9 @@ class AppealDetail extends BasePage {
     _requestFollowerList() {
         this.showLoading();
         let _appealId = this.props.location.state.appealId;
-        console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userID +'/listFollowUp';
+        let _userId = this.props.location.state.userId;
+        console.log('_appealId:' + _appealId + ' _userId:' + _userId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/listFollowUp';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -340,8 +343,9 @@ class AppealDetail extends BasePage {
     _requestUpdateFollowList() {
         this.showLoading();
         let _appealId = this.props.location.state.appealId;
-        console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/follow';
+        let _userId = this.props.location.state.userId;
+        console.log('_appealId:' + _appealId + ' _userId:' + _userId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/follow';
         axios.post(url,{
             appealId:_appealId,
             comments:this.comments,
@@ -367,8 +371,9 @@ class AppealDetail extends BasePage {
     _requestFinishAppeal() {
         this.showLoading();
         let _appealId = this.props.location.state.appealId;
-        console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/finish';
+        let _userId = this.props.location.state.userId;
+        console.log('_appealId:' + _appealId + ' _userId:' + _userId);
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/finish';
         axios.post(url,{
             appealId:_appealId,
             comments:this.comments,

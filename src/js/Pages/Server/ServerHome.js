@@ -43,7 +43,7 @@ import { Tabs, WhiteSpace, Card } from 'antd-mobile';
 import axios from 'axios';
 import BasePage from '../BasePage';
 import ClientIDCard from '../../Components/ClientIDCard';
-
+window.userId = undefined;
 
 function GetUrlParam(paraName) {
 	var url = document.location.toString();
@@ -65,6 +65,7 @@ function GetUrlParam(paraName) {
 	}
 }
 
+
 class ServerHome extends BasePage {
 
     constructor(props) {
@@ -73,19 +74,47 @@ class ServerHome extends BasePage {
 
         this.state = {
             tab:0,
+            isLogin:false,
+            userId:undefined,
             tab1Data:undefined,
             tab2Data:undefined,
             tab3Data:undefined,
             tab4Data:undefined,
         };
+        this.userId = undefined;
+        this.requestUserId = this.requestUserId.bind(this);
     }
 
     componentDidMount() {
-        let code = GetUrlParam('code');
-        console.log('Wecode:' + code);
+        this._isMounted = true;
+        this.requestUserId();
         this.hideLoading();
+        // setInterval(this.requestUserId, this.props.pollInterval);
+    }
+
+    componentWillUnMount() {
+        this._isMounted = false;
+    }
+
+    afterGettingUserIdRefresh() {
         this._requestTab1();
     }
+
+    render() {
+
+        return (
+            <div>
+                 {this._renderLoginRootContent()}
+            </div>
+        );
+
+        // return (
+        //     <div>
+        //         {this.state.isLogin ? this._renderLoginRootContent() : this._renderUnloginContent()}
+        //     </div>
+        // );
+    }
+
 
     _renderLoginContent() {
 
@@ -102,7 +131,7 @@ class ServerHome extends BasePage {
                 <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false} onTabClick={(tabData, index) => {
                         switch(index) {
                             case 0:
-                                this._render1stTabContent();
+                                this._requestTab1();
                                 break;
                             case 1:
                                 this._requestTab2();
@@ -156,6 +185,7 @@ class ServerHome extends BasePage {
                                     pathname:'/appealDetail',
                                     state: {
                                         appealId:appealID,
+                                        userId:window.userId,
                                     }
                                 });
                             }}
@@ -193,6 +223,7 @@ class ServerHome extends BasePage {
                                     pathname:'/appealDetail',
                                     state: {
                                         appealId:appealID,
+                                        userId:window.userId,
                                     }
                                 });
                             }}
@@ -229,6 +260,7 @@ class ServerHome extends BasePage {
                                     pathname:'/appealDetail',
                                     state: {
                                         appealId:appealID,
+                                        userId:window.userId,
                                     }
                                 });
                             }}
@@ -265,6 +297,7 @@ class ServerHome extends BasePage {
                                     pathname:'/appealDetail',
                                     state: {
                                         appealId:appealID,
+                                        userId:window.userId,
                                     }
                                 });
                             }}
@@ -283,8 +316,12 @@ class ServerHome extends BasePage {
     }
 
     _requestTab1() {
+        if (window.userId === undefined) {
+            return;
+        }
+        console.log('_requestTab1 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/filter';
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:false,
             status:'PENDING',
@@ -321,8 +358,12 @@ class ServerHome extends BasePage {
 
     _requestTab2() {
 
+        if (window.userId === undefined) {
+            return;
+        }
+        console.log('_requestTab2 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/filter';
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:false,
             status:'DEALING',
@@ -359,9 +400,12 @@ class ServerHome extends BasePage {
     }
 
     _requestTab3() {
-
+        if (window.userId === undefined) {
+            return;
+        }
+        console.log('_requestTab3 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/filter';
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:false,
             status:'FINISH',
@@ -398,8 +442,13 @@ class ServerHome extends BasePage {
     }
 
     _requestTab4() {
+
+        if (window.userId === undefined) {
+            return;
+        }
+        console.log('_requestTab4 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userID +'/filter';
+        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:true,
             status:'DEALING',
@@ -433,6 +482,40 @@ class ServerHome extends BasePage {
             this.hideLoading();
         });
     }
+
+
+    requestUserId() {
+        let code = GetUrlParam('code');
+        console.log('code: ' + code);
+        let paramaCode = code.replace('#/','');
+        console.log('paramaCode: ' + paramaCode);
+        this.showLoading();
+        axios.get('https://test.it.o-film.com/ofilm-hk-srv/portal/giveMeUser', {
+            params:{
+                'code':paramaCode,
+            }
+        })
+        .then((response)=> {
+            this.hideLoading();
+            if (response.data.errcode == 0 && response.data.data) {
+
+                if (this._isMounted) {
+                    window.userId = response.data.data.id ;
+                    console.log('userId:' + window.userId);
+                    console.log('用户名:'+ (response.data.data.wxCpUser ? response.data.data.wxCpUser.name : '未知' ))
+                    this._requestTab1();
+                    // this.setState({
+                    //     isLogin:true,
+                    //     userId:response.data.data.id,
+                    // });
+                }
+            }
+        })
+        .catch((err)=>{
+            this.hideLoading();
+        });
+    }
+
 }
 
 export default ServerHome;

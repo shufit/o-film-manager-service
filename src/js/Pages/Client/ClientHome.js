@@ -61,6 +61,8 @@ import axios from 'axios';
 import BasePage from '../BasePage';
 import ClientIDCard from '../../Components/ClientIDCard';
 
+window.userId = undefined;
+
 function GetUrlParam(paraName) {　　　　
 	var url = document.location.toString();　　　　
 	var arrObj = url.split("?");
