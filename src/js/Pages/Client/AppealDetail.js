@@ -43,10 +43,22 @@ import {
 
 } from 'react-weui';
 
-import { Tabs, WhiteSpace, Card , ImagePicker} from 'antd-mobile';
+import Img from 'react-image';
+
+import { Tabs, WhiteSpace, Card , ImagePicker, Grid} from 'antd-mobile';
 import axios from 'axios';
 import BasePage from '../BasePage';
 import TimeLineEvents from '../../Components/TimeLineEvents';
+import ImageViewer from '../../Components/ImageViewer';
+
+const images = [
+    {
+        src:`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAAB9klEQVR42u3d0YqDMBAFUP//p+17oRCbuRONJ49FanKy7OidQI8jMM4fY+aakXtVze3WAy5cuNvgnhNjZMGJhV2918zGX/0euHDhwh3FrVpYGm5mLVXzhwsXLty74KYf8qsKFFy4cOHugFv1YN9ZGOHChQu3GzcR3CQWPLMZW6VicOHCfRzu3QrIqs8f0/2FCxfu43DP8KgKXNLBUGTtcOHChTt5hqETsfOloCqggQsXLtzRa9KH1DoPc6SbpGWpGFy4cF+LWxV2VBW9dBiffkmBCxcu3O/7pg9GpJt6nRt5eVPhwoULd2HTswo3gbgqbIILF+67cKv+qXcuJt0kjXd/4cKFC7ehSde5kenAvqzywoUL97W4nYVl1RtOVUEe+hwuXLhw/zgrlm5WVhW3zgILFy5cuP+YJOASTcl0IzKxMXDhwoW7sp/WCdcZ2Jf9dcCFC3d73KogOfEwXxVsJ66BCxcu3FRBq3oRSIflq+Z8+W0NLly4r8U9w6MzJFrWZUi87cCFC3dL3LsdvOgMg1Y1TOHChQu3MoReVUyq5lnVSIULFy7cUdzWAxOBoCc9h6muBFy4cOEevT82l3iYj5+amdlIuHDhwn3oc256nlXfDxcuXLjnDX/g8+r1iVA/EUjBhQsX7soGZedGdhZAuHDhwh2czwejiGfFq6ImDwAAAABJRU5ErkJggg==`,
+    },
+    {
+        src:`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAAB9klEQVR42u3d0YqDMBAFUP//p+17oRCbuRONJ49FanKy7OidQI8jMM4fY+aakXtVze3WAy5cuNvgnhNjZMGJhV2918zGX/0euHDhwh3FrVpYGm5mLVXzhwsXLty74KYf8qsKFFy4cOHugFv1YN9ZGOHChQu3GzcR3CQWPLMZW6VicOHCfRzu3QrIqs8f0/2FCxfu43DP8KgKXNLBUGTtcOHChTt5hqETsfOloCqggQsXLtzRa9KH1DoPc6SbpGWpGFy4cF+LWxV2VBW9dBiffkmBCxcu3O/7pg9GpJt6nRt5eVPhwoULd2HTswo3gbgqbIILF+67cKv+qXcuJt0kjXd/4cKFC7ehSde5kenAvqzywoUL97W4nYVl1RtOVUEe+hwuXLhw/zgrlm5WVhW3zgILFy5cuP+YJOASTcl0IzKxMXDhwoW7sp/WCdcZ2Jf9dcCFC3d73KogOfEwXxVsJ66BCxcu3FRBq3oRSIflq+Z8+W0NLly4r8U9w6MzJFrWZUi87cCFC3dL3LsdvOgMg1Y1TOHChQu3MoReVUyq5lnVSIULFy7cUdzWAxOBoCc9h6muBFy4cOEevT82l3iYj5+amdlIuHDhwn3oc256nlXfDxcuXLjnDX/g8+r1iVA/EUjBhQsX7soGZedGdhZAuHDhwh2czwejiGfFq6ImDwAAAABJRU5ErkJggg==`,
+    }
+];
 
 class AppealDetail extends BasePage {
 
@@ -54,6 +66,8 @@ class AppealDetail extends BasePage {
         super(props);
         this.state = {
             gallery: false,
+            visible:false,
+            activeIndex:0,
             demoFiles: [
                 {
                     url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
@@ -73,6 +87,14 @@ class AppealDetail extends BasePage {
 
     componentDidMount() {
         this._requestAppealDetail();
+    }
+
+    render() {
+        return (
+            <div>
+                {this._renderLoginRootContent()}
+            </div>
+        );
     }
 
 
@@ -113,6 +135,7 @@ class AppealDetail extends BasePage {
             );
         } else {
             return (
+                <div>
                     <Card>
                         <Card.Header
                             title={this.state.appealData.userName}
@@ -133,56 +156,28 @@ class AppealDetail extends BasePage {
                             </div>
                         } />
                     </Card>
+                    {this._renderImageView()}
+                </div>
 
             );
         }
     }
 
-    _renderGallery(){
-        if(!this.state.gallery) return false;
+    _renderImageView() {
 
-        let srcs = this.state.demoFiles.map(file=>file.url)
+        let _images;
 
+        if(this.state.appealData && this.state.appealData.attachments &&this.state.appealData.attachments.length > 0) {
+            _images = this.state.appealData.attachments.map((item, index) => {
+                return {
+                    src:item.data,
+                };
+            });
+        } else {
+            return null;
+        }
         return (
-            <Gallery
-                src={srcs}
-                show
-                defaultIndex={this.state.gallery.id}
-                onClick={ e=> {
-                    //avoid click background item
-                    e.preventDefault()
-                    e.stopPropagation();
-                    this.setState({gallery: false})
-                }}
-            >
-
-                <GalleryDelete onClick={ (e, id)=> {
-                    this.setState({
-                        demoFiles: this.state.demoFiles.filter((e,i)=>i != id),
-                        gallery: this.state.demoFiles.length <= 1 ? true : false
-                    })
-                }} />
-
-            </Gallery>
-        )
-    }
-
-    _renderGirdCard() {
-        const gridStyle = {
-            width: '25%',
-            textAlign: 'center',
-        };
-
-        return (
-            <Card title="图片">
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-            </Card>
+            <ImageViewer images={_images}/>
         );
     }
 

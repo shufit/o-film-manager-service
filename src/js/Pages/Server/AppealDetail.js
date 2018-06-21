@@ -36,7 +36,6 @@ import {
     NavBar,
     NavBarItem,
     TabBodyItem,
-    Gallery,
     Form,
     FormCell,
     TextArea,
@@ -47,21 +46,13 @@ import { Tabs, WhiteSpace, Card , ImagePicker} from 'antd-mobile';
 import axios from 'axios';
 import BasePage from '../BasePage';
 import TimeLineEvents from '../../Components/TimeLineEvents';
+import ImageViewer from '../../Components/ImageViewer';
 
 class AppealDetail extends BasePage {
 
     constructor(props) {
         super(props);
         this.state = {
-            gallery: false,
-            demoFiles: [
-                {
-                    url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
-                    id: '2121',
-                }, {
-                    url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
-                    id: '2122',
-                }],
             confirmButtonEnable:false,
             followed:false,
             appealData:undefined,
@@ -79,7 +70,11 @@ class AppealDetail extends BasePage {
     }
 
     render() {
-        return this._renderLoginContent();
+        return (
+            <div>
+                {this._renderLoginRootContent()}
+            </div>
+        );
     }
 
 
@@ -142,6 +137,7 @@ class AppealDetail extends BasePage {
                             </div>
                         } />
                     </Card>
+                    {this._renderImageView()}
                     <ButtonArea>
                         <Button disabled={this.state.followed} onClick={()=>{
                                 this._requestWant();
@@ -156,25 +152,6 @@ class AppealDetail extends BasePage {
         }
     }
 
-    _renderGirdCard() {
-        const gridStyle = {
-            width: '25%',
-            textAlign: 'center',
-        };
-
-        return (
-            <Card title="图片">
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-            </Card>
-        );
-    }
-
     _render2ndTabContent() {
         return (
             <div>
@@ -186,6 +163,24 @@ class AppealDetail extends BasePage {
             </div>
 
 
+        );
+    }
+
+    _renderImageView() {
+
+        let _images;
+
+        if(this.state.appealData && this.state.appealData.attachments &&this.state.appealData.attachments.length > 0) {
+            _images = this.state.appealData.attachments.map((item, index) => {
+                return {
+                    src:item.data,
+                };
+            });
+        } else {
+            return null;
+        }
+        return (
+            <ImageViewer images={_images}/>
         );
     }
 

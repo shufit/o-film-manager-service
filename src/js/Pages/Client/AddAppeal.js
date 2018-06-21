@@ -3,6 +3,7 @@ import React, {
 	Component
 } from 'react';
 import ReactDOM from 'react-dom';
+import Img from 'react-image';
 
 //import styles
 import 'weui';
@@ -91,7 +92,11 @@ class AddAppeal extends BasePage {
 	}
 
 	render() {
-		return this._renderLoginContent();
+		return (
+			<div>
+				{this._renderLoginRootContent()}
+			</div>
+		);
 	}
 
 	_renderLoginContent() {

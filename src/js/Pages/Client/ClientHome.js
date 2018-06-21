@@ -97,7 +97,13 @@ class ClientHome extends BasePage {
 		};
 	}
 	componentDidMount() {
-		this.requestUserId();
+		this._isMounted = true;
+		// this.requestUserId();
+		this._requestAppealList();
+	}
+
+	componentWillUnMount() {
+		this._isMounted = false;
 	}
 
 	_renderLoginContent() {
@@ -116,7 +122,7 @@ class ClientHome extends BasePage {
 	render() {
 		return (
 			<div>
-				{this._renderLoginContent()}
+				{this._renderLoginRootContent()}
 			</div>
 		);
 	}
@@ -138,6 +144,21 @@ class ClientHome extends BasePage {
 	}
 
 	_renderCell(appealData) {
+		let statusColor = '#fff';
+		let statusString = '';
+		switch(appealData.status) {
+			case 'PENDING':
+			statusColor = 'red';
+			statusString = '待处理';
+			break;
+			case 'DEALING':
+			statusColor = 'blue';
+			statusString = '处理中';
+			break;
+			case 'FINISH':
+			statusColor = 'green';
+			statusString = '已完结';
+		}
 		return (
 			<Cell access={true} onClick={()=>{
 				this.props.history.push({
@@ -153,7 +174,7 @@ class ClientHome extends BasePage {
 					<div style={{display:'flex', fontSize:13}}>{appealData.createTime ||''}</div>
 				</CellBody>
 				<CellFooter>
-					<div style={{display:'flex', color:'red',fontSize: 15}}>{appealData.status || ''}</div>
+					<div style={{display:'flex', color:statusColor,fontSize: 15}}>{statusString || ''}</div>
 				</CellFooter>
 			</Cell>
 		);
@@ -177,6 +198,7 @@ class ClientHome extends BasePage {
 	}
 
 	_requestAppealList() {
+		window.userId = 60;
 		if(window.userId === undefined) {
 			this.showFailTost('userId不能为空');
 			return;
@@ -234,11 +256,13 @@ class ClientHome extends BasePage {
         .then((response)=> {
             this.hideLoading();
             if (response.data.errcode == 0 && response.data.data) {
-
-                    window.userId = response.data.data.id ;
+				if (this._isMounted) {
+					window.userId = response.data.data.id ;
                     console.log('userId:' + window.userId);
                     console.log('用户名:'+ (response.data.data.wxCpUser ? response.data.data.wxCpUser.name : '未知' ));
 					this._requestAppealList();
+				}
+
             }
         })
         .catch((err)=>{

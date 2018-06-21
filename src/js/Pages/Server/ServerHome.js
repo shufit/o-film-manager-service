@@ -88,8 +88,8 @@ class ServerHome extends BasePage {
     componentDidMount() {
         this._isMounted = true;
         this.requestUserId();
+        // this._requestTab1();
         this.hideLoading();
-        // setInterval(this.requestUserId, this.props.pollInterval);
     }
 
     componentWillUnMount() {
@@ -103,16 +103,10 @@ class ServerHome extends BasePage {
     render() {
 
         return (
-            <div>
-                 {this._renderLoginRootContent()}
-            </div>
-        );
-
-        // return (
-        //     <div>
-        //         {this.state.isLogin ? this._renderLoginRootContent() : this._renderUnloginContent()}
-        //     </div>
-        // );
+			<div>
+				{this._renderLoginRootContent()}
+			</div>
+		);
     }
 
 
