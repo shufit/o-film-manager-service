@@ -113,22 +113,26 @@ class AddAppeal extends BasePage {
 							<Select data={[
 									{
 										value: 0,
-										label: '生活类'
+										label: '请选择类型'
 									},
 									{
 										value: 1,
-										label: '工作类'
+										label: '生活类'
 									},
 									{
 										value: 2,
+										label: '工作类'
+									},
+									{
+										value: 3,
 										label: '其他'
 									}
 								]}
 								onChange={e=>{
 									console.log('select value:' + e.target.value);
-									this.appealType = e.target.value;
+									this.appealType = parseInt(e.target.value);
 									this.setState({
-										appealType:e.target.value,
+										appealType:parseInt(e.target.value),
 									});
 								}}
 								/>
@@ -140,9 +144,9 @@ class AddAppeal extends BasePage {
 							</CellHeader>
 							<CellBody>
 								<TextArea
-									placeholder="请输入诉求概述（50字内）"
+									placeholder="请输入诉求概述（4-15字内）"
 									rows="2"
-									maxLength={50}
+									maxLength={15}
 									onChange={e=>{
 										this.summary = e.target.value;
 	                                    if(e.target.value.length > 0) {
@@ -165,7 +169,7 @@ class AddAppeal extends BasePage {
 							</CellHeader>
 							<CellBody>
 								<TextArea
-									placeholder="请输入诉求详情(200字内)"
+									placeholder="请输入诉求详情(1-200字内)"
 									rows="3"
 									maxLength={200}
 									onChange={e=>{
@@ -240,7 +244,7 @@ class AddAppeal extends BasePage {
 		}
         let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/newAppeal';
         axios.post(url,{
-			type:this.state.appealType,
+			type:this.appealType || 0,
             userId:_userId,
 			summary:this.summary || '',
 			detail:this.detail || '',

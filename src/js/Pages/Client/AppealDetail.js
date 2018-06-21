@@ -141,6 +141,10 @@ class AppealDetail extends BasePage {
                             title={this.state.appealData.userName}
                             thumb={this.state.appealData.userAvatar}
                             extra={<span>{this.state.appealData.userPos}</span>}
+                            thumbStyle={{
+                                height: 30,
+                                width: 30,
+                            }}
                         />
                         <Card.Body>
                             <div>

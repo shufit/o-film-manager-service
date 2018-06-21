@@ -62,6 +62,7 @@ import BasePage from '../BasePage';
 import ClientIDCard from '../../Components/ClientIDCard';
 
 window.userId = undefined;
+window.appealList = [];
 
 function GetUrlParam(paraName) {　　　　
 	var url = document.location.toString();　　　　
@@ -95,11 +96,19 @@ class ClientHome extends BasePage {
 		this.state = {
 			appealList:[],
 		};
+
+		this.requestUserId = this.requestUserId.bind(this);
+		this._requestAppealList = this._requestAppealList.bind(this);
 	}
 	componentDidMount() {
 		this._isMounted = true;
-		// this.requestUserId();
-		this._requestAppealList();
+		this.requestUserId();
+		//解决异步中无法更新首页组件状态的问题
+		setInterval(()=>{
+			this.setState({});
+			// console.log('重新刷新首页')
+		},3000);
+		// this._requestAppealList();
 	}
 
 	componentWillUnMount() {
@@ -128,15 +137,15 @@ class ClientHome extends BasePage {
 	}
 
 	_renderCells() {
-		if (this.state.appealList.length === 0) {
+		if (window.appealList.length === 0) {
 			return (
 				<div>
 				</div>
 			);
 		} else {
 			let cells = [];
-			for (let i = 0; i< this.state.appealList.length; i ++) {
-				let cell = this._renderCell(this.state.appealList[i]);
+			for (let i = 0; i< window.appealList.length; i ++) {
+				let cell = this._renderCell(window.appealList[i]);
 				cells.push(cell);
 			}
 			return cells;
@@ -207,30 +216,18 @@ class ClientHome extends BasePage {
 		console.log("userID:" + window.userId);
 		let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userId +'/listBrief'
 		axios.post(url, {
-			params:{},
-			headers:{
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-			// transformResponse:[function(data){
-			// 	// console.log('诉求列表：'+data);
-			// 	return ({
-			// 		status:data.errcode,
-			// 		statusText:data.errmsg,
-			// 		data:{
-			// 			list:data.data,
-			// 		},
-			//
-			// 	});
-			// }],
-			responseType: 'json',
 		})
 		.then((response) => {
 			this.hideLoading();
 			if (response.data.errcode == 0) {
 				let _appealList = response.data.data;
-				this.setState({
-					appealList:_appealList,
-				});
+				window.appealList = _appealList;
+				if (this._isMounted) {
+					this.setState({
+						appealList:_appealList,
+					});
+				}
+				setTimeout(()=>{this.setState({})},10000);
 				console.log('appealList 数量'+_appealList.length);
 			}
 			console.log('诉求列表：'+response.data.data.length);
