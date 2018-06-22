@@ -207,7 +207,6 @@ class ClientHome extends BasePage {
 	}
 
 	_requestAppealList() {
-		window.userId = 60;
 		if(window.userId === undefined) {
 			this.showFailTost('userId不能为空');
 			return;
@@ -253,12 +252,10 @@ class ClientHome extends BasePage {
         .then((response)=> {
             this.hideLoading();
             if (response.data.errcode == 0 && response.data.data) {
-				if (this._isMounted) {
 					window.userId = response.data.data.id ;
                     console.log('userId:' + window.userId);
                     console.log('用户名:'+ (response.data.data.wxCpUser ? response.data.data.wxCpUser.name : '未知' ));
 					this._requestAppealList();
-				}
 
             }
         })
