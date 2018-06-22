@@ -315,7 +315,7 @@ class ServerHome extends BasePage {
         }
         console.log('_requestTab1 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:false,
             status:'PENDING',
@@ -357,7 +357,7 @@ class ServerHome extends BasePage {
         }
         console.log('_requestTab2 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:false,
             status:'DEALING',
@@ -399,7 +399,7 @@ class ServerHome extends BasePage {
         }
         console.log('_requestTab3 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:false,
             status:'FINISH',
@@ -442,7 +442,7 @@ class ServerHome extends BasePage {
         }
         console.log('_requestTab4 running');
         this.showLoading();
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + window.userId  +'/filter';
         axios.post(url,{
             onlyMe:true,
             status:'DEALING',
@@ -484,7 +484,7 @@ class ServerHome extends BasePage {
         let paramaCode = code.replace('#/','');
         console.log('paramaCode: ' + paramaCode);
         this.showLoading();
-        axios.get('https://test.it.o-film.com/ofilm-hk-srv/portal/giveMeUser', {
+        axios.get('https://it.o-film.com/ofilm-hk-srv/portal/giveMeUser', {
             params:{
                 'code':paramaCode,
             }

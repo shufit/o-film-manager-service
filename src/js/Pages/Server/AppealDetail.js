@@ -237,7 +237,7 @@ class AppealDetail extends BasePage {
         let _appealId = this.props.location.state.appealId;
         let _userId = this.props.location.state.userId;
         console.log('_appealId:' + _appealId + ' _userId:' + _userId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/fetch';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/fetch';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -278,7 +278,7 @@ class AppealDetail extends BasePage {
         let _appealId = this.props.location.state.appealId;
         let _userId = this.props.location.state.userId;
         console.log('_appealId:' + _appealId + ' _userId:' + _userId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/want';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/want';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -307,7 +307,7 @@ class AppealDetail extends BasePage {
         let _appealId = this.props.location.state.appealId;
         let _userId = this.props.location.state.userId;
         console.log('_appealId:' + _appealId + ' _userId:' + _userId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/listFollowUp';
+        let url = 'https://it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/listFollowUp';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -344,7 +344,7 @@ class AppealDetail extends BasePage {
         let _appealId = this.props.location.state.appealId;
         let _userId = this.props.location.state.userId;
         console.log('_appealId:' + _appealId + ' _userId:' + _userId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/follow';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/follow';
         axios.post(url,{
             appealId:_appealId,
             comments:this.comments,
@@ -372,7 +372,7 @@ class AppealDetail extends BasePage {
         let _appealId = this.props.location.state.appealId;
         let _userId = this.props.location.state.userId;
         console.log('_appealId:' + _appealId + ' _userId:' + _userId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/finish';
+        let url = 'https://it.o-film.com/ofilm-hk-srv/appeal/' + _userId +'/finish';
         axios.post(url,{
             appealId:_appealId,
             comments:this.comments,

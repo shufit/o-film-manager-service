@@ -242,7 +242,7 @@ class AddAppeal extends BasePage {
 			this.showFailTost('userId不能为空');
 			return;
 		}
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/newAppeal';
+        let url = 'https://it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/newAppeal';
         axios.post(url,{
 			type:this.appealType || 0,
             userId:_userId,
