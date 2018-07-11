@@ -211,7 +211,7 @@ class AppealDetail extends BasePage {
             return;
         }
         console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/fetchDetail';
+        let url = 'https://it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/fetchDetail';
         axios.post(url,{
             appealId:_appealId,
         })
@@ -252,7 +252,7 @@ class AppealDetail extends BasePage {
             return;
         }
         console.log('_appealId:' + _appealId);
-        let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/listFollowUp';
+        let url = 'https://it.o-film.com/ofilm-hk-cli/appeal/' + _userId +'/listFollowUp';
         axios.post(url,{
             appealId:_appealId,
         })

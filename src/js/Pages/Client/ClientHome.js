@@ -213,7 +213,7 @@ class ClientHome extends BasePage {
 		}
 		this.showLoading();
 		console.log("userID:" + window.userId);
-		let url = 'https://test.it.o-film.com/ofilm-hk-cli/appeal/' + window.userId +'/listBrief'
+		let url = 'https://it.o-film.com/ofilm-hk-cli/appeal/' + window.userId +'/listBrief'
 		axios.post(url, {
 		})
 		.then((response) => {
@@ -244,7 +244,7 @@ class ClientHome extends BasePage {
         let paramaCode = code.replace('#/','');
         console.log('paramaCode: ' + paramaCode);
         this.showLoading();
-        axios.get('https://test.it.o-film.com/ofilm-hk-cli/portal/giveMeUser', {
+        axios.get('https://it.o-film.com/ofilm-hk-cli/portal/giveMeUser', {
             params:{
                 'code':paramaCode,
             }
